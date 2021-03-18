@@ -442,7 +442,7 @@ namespace sloth {
     }
 
     /**
-     * Set gesture for sloth:bit: fill in the blank to drive servo turn the angle and show gesture for you. This block
+     * Set gesture for sloth:bit: fill in the blank to drive servo turn the angle and show gesture for you. This block 
      * is just for advance, pay attention to set value, and provide blocking protection to the servos
      */
     //% blockId=sloth_set_gesture block="set gesture | Left Leg %o1| Left Foot %o2| Right Leg %o3| Right Foot %o4"
