@@ -4,10 +4,10 @@
 namespace sloth {
 
     export enum PWMChn {
-        Right_Leg = 6,
-        Right_Foot = 7,
-        Left_Foot = 8,
-        Left_Leg = 9,
+        Right_Leg = 0x01,
+        Right_Foot = 0x02,
+        Left_Foot = 0x03,
+        Left_Leg = 0x04,
         CH1 = 0,
         CH2 = 1,
         CH3 = 2,
@@ -442,7 +442,7 @@ namespace sloth {
     }
 
     /**
-     * Set gesture for sloth:bit: fill in the blank to drive servo turn the angle and show gesture for you. This block 
+     * Set gesture for sloth:bit: fill in the blank to drive servo turn the angle and show gesture for you. This block
      * is just for advance, pay attention to set value, and provide blocking protection to the servos
      */
     //% blockId=sloth_set_gesture block="set gesture | Left Leg %o1| Left Foot %o2| Right Leg %o3| Right Foot %o4"
