@@ -3,22 +3,11 @@
 //% weight=5 color=#1BAFEA icon="\uf1b0"
 namespace sloth {
 
-      export enum Servos {
-         S1 = 0x01,
-         S2 = 0x02,
-         S3 = 0x03,
-         S4 = 0x04,
-         S5 = 0x05,
-         S6 = 0x06,
-         S7 = 0x07,
-         S8 = 0x08
-     }
-
     export enum PWMChn {
-        Right_Leg = Servos.S1,
-        Right_Foot = Servos.S2,
-        Left_Foot = Servos.S3,
-        Left_Leg = Servos.S4,
+        Right_Leg = 0,
+        Right_Foot = 0,
+        Left_Foot = 0,
+        Left_Leg = 0,
         CH1 = 0,
         CH2 = 1,
         CH3 = 2,
@@ -300,9 +289,6 @@ namespace sloth {
     function init(): void {
         i2cwrite(MODE1, 0x00)
         setFreq(50);
-        for (let idx = 0; idx < 16; idx++) {
-            setPwm(idx, 0 ,0);
-        }
         initialized = true
     }
 
@@ -369,7 +355,7 @@ namespace sloth {
             // 50hz: 20,000 us
             let v_us = (degree * (maxPulse - minPulse) / 180 + minPulse) // 0.5 ~ 2.5
             let value = v_us * 4096 / 20000
-            setPwm(channel + 7, 0, value)
+            setPwm(channel, 0, value)
         }
     }
 
