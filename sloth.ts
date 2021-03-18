@@ -1,4 +1,3 @@
-
 //
 //% weight=5 color=#1BAFEA icon="\uf1b0"
 namespace sloth {
@@ -691,7 +690,6 @@ namespace sloth {
 
     /*
     function is_get_voice(threshold: number = 1): boolean {
-
         let volume: number = volume_of_heard()
         if (volume > threshold)
             return true
