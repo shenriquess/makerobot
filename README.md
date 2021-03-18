@@ -1,6 +1,7 @@
 # Sloth:bit
 This library provides a driver for sloth:bit from sunfounder, see  https://www.sunfounder.com/humanoid-robot-bbc-micro-bit.html  
 
+### Original Repository: https://github.com/sunfounder/pxt-sloth
 
 ## Basic usage
 
