@@ -1,18 +1,7 @@
+
 //
 //% weight=5 color=#1BAFEA icon="\uf1b0"
 namespace sloth {
-
-    export enum PWMChn {
-        Right_Leg = 0x01,
-        Right_Foot = 0x02,
-        Left_Foot = 0x03,
-        Left_Leg = 0x04,
-    }
-
-    let right_leg = PWMChn.Right_Leg
-    let right_foot = PWMChn.Right_Foot
-    let left_foot = PWMChn.Left_Foot
-    let left_leg = PWMChn.Left_Leg
 
     const minPulse = 500
     const maxPulse = 2500
@@ -31,6 +20,20 @@ namespace sloth {
     const ALL_LED_ON_H = 0xFB
     const ALL_LED_OFF_L = 0xFC
     const ALL_LED_OFF_H = 0xFD
+
+    export enum PWMChn {
+        Right_Leg = 0x01,
+        Right_Foot = 0x02,
+        Left_Foot = 0x03,
+        Left_Leg = 0x04
+    }
+
+    let right_leg = PWMChn.Right_Leg
+    let right_foot = PWMChn.Right_Foot
+    let left_foot = PWMChn.Left_Foot
+    let left_leg = PWMChn.Left_Leg
+
+
 
 
     let action_data = [
@@ -274,12 +277,9 @@ namespace sloth {
     }
 
     function init(): void {
-       i2cwrite(PCA9685_ADDRESS, MODE1, 0x00)
-       setFreq(50);
-       for (let idx = 0; idx < 16; idx++) {
-           setPwm(idx, 0 ,0);
-       }
-       initialized = true
+        i2cwrite(MODE1, 0x00)
+        setFreq(50);
+        initialized = true
     }
 
     function setFreq(freq: number): void {
@@ -289,13 +289,13 @@ namespace sloth {
         prescaleval /= freq;
         prescaleval -= 1;
         let prescale = prescaleval; //Math.Floor(prescaleval + 0.5);
-        let oldmode = i2cread(PCA9685_ADDRESS, MODE1);
+        let oldmode = i2cread(MODE1);
         let newmode = (oldmode & 0x7F) | 0x10; // sleep
-        i2cwrite(PCA9685_ADDRESS, MODE1, newmode); // go to sleep
-        i2cwrite(PCA9685_ADDRESS, PRESCALE, prescale); // set the prescaler
-        i2cwrite(PCA9685_ADDRESS, MODE1, oldmode);
+        i2cwrite(MODE1, newmode); // go to sleep
+        i2cwrite(PRESCALE, prescale); // set the prescaler
+        i2cwrite(MODE1, oldmode);
         control.waitMicros(5000);
-        i2cwrite(PCA9685_ADDRESS, MODE1, oldmode | 0xa1);
+        i2cwrite(MODE1, oldmode | 0xa1);
     }
 
     /**
@@ -313,7 +313,9 @@ namespace sloth {
     //% off.min=0 off.max=4095
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     export function setPwm(channel: PWMChn, on: number, off: number): void {
-
+        if (!initialized) {
+            init()
+        }
         if (channel < 0 || channel > 15)
             return;
 
@@ -339,10 +341,6 @@ namespace sloth {
     //% degree.min=0 degree.max=180
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     export function servo_write(channel: PWMChn, degree: number): void {
-        if (!initialized) {
-            init()
-        }
-
         if (degree < 181 && degree > -1) {
             // 50hz: 20,000 us
             let v_us = (degree * (maxPulse - minPulse) / 180 + minPulse) // 0.5 ~ 2.5
@@ -683,6 +681,7 @@ namespace sloth {
 
     /*
     function is_get_voice(threshold: number = 1): boolean {
+
         let volume: number = volume_of_heard()
         if (volume > threshold)
             return true
