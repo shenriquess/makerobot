@@ -3,15 +3,15 @@
 namespace sloth {
 
     export enum PWMChn {
-        Right_Leg = 0x01,
-        Right_Foot = 0x02,
-        Left_Foot = 0x03,
-        Left_Leg = 0x04,
+        Right_Leg = 1,
+        Right_Foot = 2,
+        Left_Foot = 3,
+        Left_Leg = 4,
         CH1 = 0,
-        CH2 = 1,
-        CH3 = 2,
-        CH4 = 3,
-        CH5 = 4,
+        CH2 = 6,
+        CH3 = 7,
+        CH4 = 8,
+        CH5 = 9,
         CH6 = 5,
         CH7 = 10,
         CH8 = 11,
