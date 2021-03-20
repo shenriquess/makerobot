@@ -5,14 +5,14 @@ namespace sloth {
     export enum PWMChn {
         Right_Leg = 6,
         Right_Foot = 7,
-        Left_Foot = 4,
-        Left_Leg = 5,
+        Left_Foot = 8,
+        Left_Leg = 9,
         CH1 = 0,
         CH2 = 1,
         CH3 = 2,
         CH4 = 3,
-        CH5 = 8,
-        CH6 = 9,
+        CH5 = 4,
+        CH6 = 5,
         CH7 = 10,
         CH8 = 11,
         CH9 = 12,
@@ -21,10 +21,10 @@ namespace sloth {
         CH12 = 15
     }
 
-    let right_leg = PWMChn.Right_Leg
-    let right_foot = PWMChn.Right_Foot
-    let left_foot = PWMChn.Left_Foot
-    let left_leg = PWMChn.Left_Leg
+    let right_leg = PWMChn.CH6
+    let right_foot = PWMChn.CH7
+    let left_foot = PWMChn.CH8
+    let left_leg = PWMChn.CH9
 
     const minPulse = 500
     const maxPulse = 2500
