@@ -2,11 +2,30 @@
 //% weight=5 color=#1BAFEA icon="\uf1b0"
 namespace sloth {
 
+  const minPulse = 500
+  const maxPulse = 2500
+  const PCA9685_ADDRESS = 0x40
+  const MODE1 = 0x00
+  const MODE2 = 0x01
+  const SUBADR1 = 0x02
+  const SUBADR2 = 0x03
+  const SUBADR3 = 0x04
+  const PRESCALE = 0xFE
+  const LED0_ON_L = 0x06
+  const LED0_ON_H = 0x07
+  const LED0_OFF_L = 0x08
+  const LED0_OFF_H = 0x09
+  const ALL_LED_ON_L = 0xFA
+  const ALL_LED_ON_H = 0xFB
+  const ALL_LED_OFF_L = 0xFC
+  const ALL_LED_OFF_H = 0xFD
+
+
     export enum PWMChn {
-        Right_Leg = 6,
-        Right_Foot = 7,
-        Left_Foot = 8,
-        Left_Leg = 9,
+        Right_Leg = 0x01,
+        Right_Foot = 0x02,
+        Left_Foot = 0x03,
+        Left_Leg = 0x04,
         CH1 = 0,
         CH2 = 1,
         CH3 = 2,
@@ -21,10 +40,10 @@ namespace sloth {
         CH12 = 15
     }
 
-    let right_leg = PWMChn.CH6
-    let right_foot = PWMChn.CH7
-    let left_foot = PWMChn.CH8
-    let left_leg = PWMChn.CH9
+    let right_leg = PWMChn.Right_Leg
+    let right_foot = PWMChn.Right_Foot
+    let left_foot = PWMChn.Left_Foot
+    let left_leg = PWMChn.Left_Leg
 
     const minPulse = 500
     const maxPulse = 2500
