@@ -2,11 +2,6 @@
 //% weight=5 color=#1BAFEA icon="\uf1b0"
 namespace sloth {
 
-    const MODE2 = 0x01
-    const SUBADR1 = 0x02
-    const SUBADR2 = 0x03
-    const SUBADR3 = 0x04
-
     export enum PWMChn {
         Right_Leg = 0x01,
         Right_Foot = 0x02,
