@@ -3,22 +3,10 @@
 namespace sloth {
 
     export enum PWMChn {
-        Right_Leg = 1,
-        Right_Foot = 2,
-        Left_Foot = 3,
-        Left_Leg = 4,
-        CH1 = 0,
-        CH2 = 6,
-        CH3 = 7,
-        CH4 = 8,
-        CH5 = 9,
-        CH6 = 5,
-        CH7 = 10,
-        CH8 = 11,
-        CH9 = 12,
-        CH10 = 13,
-        CH11 = 14,
-        CH12 = 15
+        Right_Leg = 0x01,
+        Right_Foot = 0x02,
+        Left_Foot = 0x03,
+        Left_Leg = 0x04,
     }
 
     let right_leg = PWMChn.Right_Leg
@@ -286,9 +274,12 @@ namespace sloth {
     }
 
     function init(): void {
-        i2cwrite(MODE1, 0x00)
-        setFreq(50);
-        initialized = true
+       i2cwrite(PCA9685_ADDRESS, MODE1, 0x00)
+       setFreq(50);
+       for (let idx = 0; idx < 16; idx++) {
+           setPwm(idx, 0 ,0);
+       }
+       initialized = true
     }
 
     function setFreq(freq: number): void {
@@ -298,13 +289,13 @@ namespace sloth {
         prescaleval /= freq;
         prescaleval -= 1;
         let prescale = prescaleval; //Math.Floor(prescaleval + 0.5);
-        let oldmode = i2cread(MODE1);
+        let oldmode = i2cread(PCA9685_ADDRESS, MODE1);
         let newmode = (oldmode & 0x7F) | 0x10; // sleep
-        i2cwrite(MODE1, newmode); // go to sleep
-        i2cwrite(PRESCALE, prescale); // set the prescaler
-        i2cwrite(MODE1, oldmode);
+        i2cwrite(PCA9685_ADDRESS, MODE1, newmode); // go to sleep
+        i2cwrite(PCA9685_ADDRESS, PRESCALE, prescale); // set the prescaler
+        i2cwrite(PCA9685_ADDRESS, MODE1, oldmode);
         control.waitMicros(5000);
-        i2cwrite(MODE1, oldmode | 0xa1);
+        i2cwrite(PCA9685_ADDRESS, MODE1, oldmode | 0xa1);
     }
 
     /**
@@ -322,9 +313,7 @@ namespace sloth {
     //% off.min=0 off.max=4095
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     export function setPwm(channel: PWMChn, on: number, off: number): void {
-        if (!initialized) {
-            init()
-        }
+
         if (channel < 0 || channel > 15)
             return;
 
@@ -350,11 +339,15 @@ namespace sloth {
     //% degree.min=0 degree.max=180
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     export function servo_write(channel: PWMChn, degree: number): void {
+        if (!initialized) {
+            init()
+        }
+
         if (degree < 181 && degree > -1) {
             // 50hz: 20,000 us
             let v_us = (degree * (maxPulse - minPulse) / 180 + minPulse) // 0.5 ~ 2.5
             let value = v_us * 4096 / 20000
-            setPwm(channel, 0, value)
+            setPwm(channel + 7, 0, value)
         }
     }
 
