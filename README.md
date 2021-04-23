@@ -1,3 +1,6 @@
+# Makerobot
+Adaptation of the Sloth:bit code for Makerobot.
+
 # Sloth:bit
 This library provides a driver for sloth:bit from sunfounder, see  https://www.sunfounder.com/humanoid-robot-bbc-micro-bit.html  
 
